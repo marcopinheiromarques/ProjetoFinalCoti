@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace Projeto.Apresentacao.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         public ActionResult Index()
@@ -25,16 +26,6 @@ namespace Projeto.Apresentacao.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
-        }
-
-        public ActionResult Login()
-        {
-            return View();
-        }
-
-        public ActionResult Register()
-        {
-            return View();
-        }
+        }        
     }
 }
