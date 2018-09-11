@@ -1,4 +1,6 @@
-﻿@{ 
+﻿@model Projeto.Apresentacao.Models.UsuarioRegistroViewModel
+
+@{
     Layout = null;
 }
 
@@ -12,77 +14,93 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Agenda Virtual - Registrar</title>
+    <title>Agenda Virtual - Registrar Conta</title>
     <!-- Bootstrap core CSS-->
     <link href="~/Content/vendor/bootstrap/bootstrap.min.css" rel="stylesheet" />
     <!-- Custom fonts for this template-->
     <link href="~/Content/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" />
     <!-- Custom styles for this template-->
     <link href="~/Content/sb-admin.css" rel="stylesheet" />
-    
+
 </head>
 
-  <body class="bg-dark">
+<body class="bg-dark">
 
     <div class="container">
-      <div class="card card-register mx-auto mt-5">
-        <div class="card-header">Registrar uma Conta</div>
-        <div class="card-body">
-          <form>
-            <div class="form-group">
-              <div class="form-row">
-                <div class="col-md-6">
-                  <div class="form-label-group">
-                    <input type="text" id="firstName" class="form-control" placeholder="Primeiro Nome" required="required" autofocus="autofocus">
-                    <label for="firstName">Primeiro Nome</label>
-                  </div>
+        <div class="card card-register mx-auto mt-5">
+            <div class="card-header">Registrar uma Conta</div>
+            <div class="card-body">
+
+                @using (Html.BeginForm("RegistrarUsuario", "Usuario", FormMethod.Post))
+                {
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Login)
+                                @Html.TextBoxFor(model => model.Login, new { @placeholder = "Login", @class = "form-control", autofocus = true })
+                                <span class="text-danger">
+                                    @Html.ValidationMessageFor(model => model.Login)
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Email)
+                                @Html.TextBoxFor(model => model.Email, new { @placeholder = "E-mail", @class = "form-control" })
+                                <span class="text-danger">
+                                    @Html.ValidationMessageFor(model => model.Email)
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Senha)
+                                @Html.PasswordFor(model => model.Senha, new { @placeholder = "Senha", @class = "form-control" })
+                                <span class="text-danger">
+                                    @Html.ValidationMessageFor(model => model.Senha)
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ConfirmarSenha)
+                                @Html.PasswordFor(model => model.ConfirmarSenha, new { @placeholder = "Confirmar Senha", @class = "form-control" })
+                                <span class="text-danger">
+                                    @Html.ValidationMessageFor(model => model.ConfirmarSenha)
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="submit" value="Registrar" class="btn btn-primary btn-block" />
+                }
+
+                <span class="text-danger">
+                    @ViewBag.Mensagem
+                </span>
+
+                <span class="text-success">
+                    @ViewBag.MensagemCadastro
+                </span>
+
+                <div class="text-center">
+                    <a class="d-block small mt-3" href='@Url.Content("~/Usuario/Login")'>Página de Login</a>
+                    <a class="d-block small" href='@Url.Content("~/Usuario/EsqueceuSenha")'>Esqueceu a Senha?</a>
                 </div>
-                <div class="col-md-6">
-                  <div class="form-label-group">
-                    <input type="text" id="lastName" class="form-control" placeholder="Último Nome" required="required">
-                    <label for="lastName">Último Nome</label>
-                  </div>
-                </div>
-              </div>
+
             </div>
-            <div class="form-group">
-              <div class="form-label-group">
-                <input type="email" id="inputEmail" class="form-control" placeholder="E-mail" required="required">
-                <label for="inputEmail">E-mail</label>
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="form-row">
-                <div class="col-md-6">
-                  <div class="form-label-group">
-                    <input type="password" id="inputPassword" class="form-control" placeholder="Senha" required="required">
-                    <label for="inputPassword">Senha</label>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-label-group">
-                    <input type="password" id="confirmPassword" class="form-control" placeholder="Confirmar Senha" required="required">
-                    <label for="confirmPassword">Confirmar Senha</label>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <a class="btn btn-primary btn-block" href="login.html">Registrar</a>
-          </form>
-          <div class="text-center">
-            <a class="d-block small mt-3" href='@Url.Content("~/Usuario/Login")'>Página de Login</a>
-            <a class="d-block small" href="forgot-password.html">Esqueceu a Senha?</a>
-          </div>
         </div>
-      </div>
     </div>
 
     <!-- Bootstrap core JavaScript-->
     <script src="~/Scripts/vendor/jquery/jquery.min.js"></script>
     <script src="~/Scripts/vendor/bootstrap/bootstrap.bundle.min.js"></script>
-    
+
     <!-- Core plugin JavaScript-->
     <script src="~/Scripts/vendor/bootstrap/bootstrap.bundle.min.js"></script>
-  </body>
+</body>
 
 </html>

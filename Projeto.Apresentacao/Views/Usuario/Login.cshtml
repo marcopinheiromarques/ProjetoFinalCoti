@@ -1,4 +1,6 @@
-﻿@{ 
+﻿@model Projeto.Apresentacao.Models.LoginViewModel
+
+@{
     Layout = null;
 }
 
@@ -15,12 +17,12 @@
 
     <!-- Bootstrap core CSS-->
     <link href="~/Content/vendor/bootstrap/bootstrap.min.css" rel="stylesheet" />
-    
+
     <!-- Custom fonts for this template-->
     <link href="~/Content/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" />
-    
+
     <!-- Custom styles for this template-->
-    <link href="~/Content/sb-admin.css" rel="stylesheet" />        
+    <link href="~/Content/sb-admin.css" rel="stylesheet" />
 </head>
 
 <body class="bg-dark">
@@ -28,32 +30,49 @@
         <div class="card card-login mx-auto mt-5">
             <div class="card-header">Login</div>
             <div class="card-body">
-                <form>
-                    <div class="form-group">
-                        <div class="form-label-group">
-                            <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="required" autofocus="autofocus">
-                            <label for="inputEmail">E-mail</label>
+
+                @using (Html.BeginForm("AutenticarUsuario", "Usuario", FormMethod.Post))
+                {
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Login)
+                                @Html.TextBoxFor(model => model.Login, new { @placeholder = "Login", @class = "form-control", autofocus = true })
+                                <span class="text-danger">
+                                    @Html.ValidationMessageFor(model => model.Login)
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Senha)
+                                @Html.PasswordFor(model => model.Senha, new { @placeholder = "Senha", @class = "form-control" })
+                                <span class="text-danger">
+                                    @Html.ValidationMessageFor(model => model.Senha)
+                                </span>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <div class="form-label-group">
-                            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="required">
-                            <label for="inputPassword">Senha</label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" value="lembrar_senha">
-                                Lembrar Senha
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                @Html.CheckBoxFor(model => model.LembrarMe, new { @class = "form-check-input" }) Lembrar-me
+                                
                             </label>
                         </div>
                     </div>
-                    <a class="btn btn-primary btn-block" href="index.html">Login</a>
-                </form>
+                    <input type="submit" value="Login" class="btn btn-primary btn-block" />
+                    
+                    <span class="text-danger">
+                        @ViewBag.Mensagem
+                    </span>
+                }
+
                 <div class="text-center">
                     <a class="d-block small mt-3" href='@Url.Content("~/Usuario/Registro")'>Registrar Nova Conta</a>
-                    <a class="d-block small" href="forgot-password.html">Esqueceu a Senha?</a>
+                    <a class="d-block small" href='@Url.Content("~/Usuario/EsqueceuSenha")'>Esqueceu a Senha?</a>
                 </div>
             </div>
         </div>
@@ -61,9 +80,9 @@
     <!-- Bootstrap core JavaScript-->
     <script src="~/Scripts/vendor/jquery/jquery.min.js"></script>
     <script src="~/Scripts/vendor/bootstrap/bootstrap.bundle.min.js"></script>
-   
+
     <!-- Core plugin JavaScript-->
-    <script src="~/Scripts/vendor/jquery-easing/jquery.easing.min.js"></script>       
+    <script src="~/Scripts/vendor/jquery-easing/jquery.easing.min.js"></script>
 </body>
 
 </html>

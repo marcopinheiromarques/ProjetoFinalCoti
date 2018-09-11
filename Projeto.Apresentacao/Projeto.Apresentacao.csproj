@@ -147,6 +147,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\LoginViewModel.cs" />
+    <Compile Include="Models\UsuarioRegistroViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1621,7 +1623,14 @@
     <Content Include="Views\Usuario\EsqueceuSenha.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\" />
+    <ProjectReference Include="..\Projeto.Negocio\Projeto.Negocio.csproj">
+      <Project>{9fd8abfa-498c-4f3f-9f03-aa4229e914a2}</Project>
+      <Name>Projeto.Negocio</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Projeto.Repositorio\Projeto.Repositorio.csproj">
+      <Project>{91c04d69-38da-4685-b3b1-f894232ae49e}</Project>
+      <Name>Projeto.Repositorio</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
