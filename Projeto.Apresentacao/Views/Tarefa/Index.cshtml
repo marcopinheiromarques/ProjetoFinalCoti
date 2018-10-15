@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h4>Tarefas</h4>
+<hr />
+<br />
+
+<div class="row">
+    <div class="col-md-2">
+        <button class="btn btn-primary btn-block"><i class="fas fa-plus"></i> Inserir</button>
+    </div>
+    <div class="col-md-2">
+        <button class="btn btn-default btn-block"><i class="fas fa-search"></i> Pesquisar</button>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Nome</th>
+                    <th>Data de Entrega</th>
+                    <th>Descrição</th>
+                    <th>Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td>Total de Registros: </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>

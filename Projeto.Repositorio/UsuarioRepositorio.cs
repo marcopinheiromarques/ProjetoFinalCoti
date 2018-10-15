@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -17,7 +16,7 @@ namespace Projeto.Repositorio
 
         public UsuarioRepositorio()
         {
-           stringConexao = ConfigurationManager.ConnectionStrings["BancoLocal"].ConnectionString;
+            stringConexao = ConexaoBanco.stringConexao;
         }
 
         public Usuario Inserir(Usuario usuario)
@@ -109,7 +108,20 @@ namespace Projeto.Repositorio
 
             using (SqlConnection con = new SqlConnection(stringConexao))
             {
-                usuario = con.Query<Usuario>(query).FirstOrDefault();
+                usuario = con.Query<Usuario>(query, new { IdContato = id }).FirstOrDefault();
+            }
+
+            return usuario;
+        }
+
+        public Usuario EncontrarPorLogin(string login)
+        {
+            string query = "SELECT * FROM Usuarios WHERE Login = @Login";
+            Usuario usuario = null;
+
+            using (SqlConnection con = new SqlConnection(stringConexao))
+            {
+                usuario = con.Query<Usuario>(query, new { Login = login }).FirstOrDefault();
             }
 
             return usuario;
@@ -139,11 +151,5 @@ namespace Projeto.Repositorio
                 return con.Query<Usuario>(query, new { Login = usuario.Login, Senha = Criptografia.Encriptar(usuario.Senha) }).FirstOrDefault() != null;
             }
         }
-
-
-
-
-
-
     }
 }

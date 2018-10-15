@@ -142,11 +142,17 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ContatoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TarefaController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ContatoEdicaoViewModel.cs" />
+    <Compile Include="Models\ContatoFiltroViewModel.cs" />
+    <Compile Include="Models\ContatoInclusaoViewModel.cs" />
+    <Compile Include="Models\ContatoViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\UsuarioRegistroViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -160,6 +166,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\sb-admin.css" />
     <Content Include="Content\sb-admin.min.css" />
+    <Content Include="Content\sweetalert2.min.css" />
     <Content Include="Content\vendor\bootstrap\bootstrap-grid.css" />
     <Content Include="Content\vendor\bootstrap\bootstrap-grid.min.css" />
     <Content Include="Content\vendor\bootstrap\bootstrap-reboot.css" />
@@ -1547,6 +1554,7 @@
     <Content Include="Content\vendor\fontawesome-free\webfonts\fa-solid-900.woff" />
     <Content Include="Content\vendor\fontawesome-free\webfonts\fa-solid-900.woff2" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\contato.js" />
     <Content Include="Scripts\demo\chart-area-demo.js" />
     <Content Include="Scripts\demo\chart-bar-demo.js" />
     <Content Include="Scripts\demo\chart-pie-demo.js" />
@@ -1563,6 +1571,7 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\sb-admin.js" />
     <Content Include="Scripts\sb-admin.min.js" />
+    <Content Include="Scripts\sweetalert2.min.js" />
     <Content Include="Scripts\vendor\bootstrap\bootstrap.bundle.js" />
     <Content Include="Scripts\vendor\bootstrap\bootstrap.bundle.min.js" />
     <Content Include="Scripts\vendor\bootstrap\bootstrap.js" />
@@ -1614,6 +1623,7 @@
     <Content Include="Scripts\vendor\bootstrap\bootstrap.min.js.map" />
     <Content Include="Scripts\vendor\jquery\jquery.min.map" />
     <Content Include="Scripts\vendor\jquery\jquery.slim.min.map" />
+    <Content Include="Views\Contato\Index.cshtml" />
     <None Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
@@ -1621,6 +1631,7 @@
     <Content Include="Views\Usuario\Login.cshtml" />
     <Content Include="Views\Usuario\Registro.cshtml" />
     <Content Include="Views\Usuario\EsqueceuSenha.cshtml" />
+    <Content Include="Views\Tarefa\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Projeto.Negocio\Projeto.Negocio.csproj">
@@ -1645,6 +1656,7 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
