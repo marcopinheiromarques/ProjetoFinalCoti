@@ -1,4 +1,5 @@
-﻿using Projeto.Apresentacao.Models;
+﻿using Projeto.Apresentacao.Filters;
+using Projeto.Apresentacao.Models;
 using Projeto.Negocio;
 using Projeto.Repositorio;
 using System;
@@ -12,11 +13,13 @@ namespace Projeto.Apresentacao.Controllers
     public class ContatoController : Controller
     {
         // GET: Contato
+        [NoCache]
         public ActionResult Index()
         {
             return View();
         }
 
+        
         [HttpGet]
         public JsonResult Listar(string usuarioLogado)
         {
@@ -47,6 +50,7 @@ namespace Projeto.Apresentacao.Controllers
             }
         }
 
+        
         public JsonResult Alterar(ContatoEdicaoViewModel model)
         {
             try
@@ -85,6 +89,7 @@ namespace Projeto.Apresentacao.Controllers
             }
         }
 
+        
         public JsonResult BuscarContato(int id)
         {
             try
@@ -115,6 +120,7 @@ namespace Projeto.Apresentacao.Controllers
             }
         }
 
+        
         public JsonResult Excluir(int id)
         {
             try
@@ -146,6 +152,7 @@ namespace Projeto.Apresentacao.Controllers
             }
         }
 
+        
         public JsonResult Inserir(string usuarioLogado, ContatoInclusaoViewModel contatoInclusaoViewModel)
         {
             try
@@ -186,6 +193,7 @@ namespace Projeto.Apresentacao.Controllers
             }
         }
 
+        
         public JsonResult Filtrar(string usuarioLogado, ContatoFiltroViewModel filtro)
         {
             try

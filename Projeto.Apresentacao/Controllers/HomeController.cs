@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Projeto.Apresentacao.Filters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,6 +10,7 @@ namespace Projeto.Apresentacao.Controllers
     [Authorize]
     public class HomeController : Controller
     {
+        [NoCache]
         public ActionResult Index()
         {
             return View();

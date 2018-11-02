@@ -1,4 +1,5 @@
-﻿using Projeto.Apresentacao.Models;
+﻿using Projeto.Apresentacao.Filters;
+using Projeto.Apresentacao.Models;
 using Projeto.Negocio;
 using Projeto.Repositorio;
 using System;
@@ -12,6 +13,7 @@ namespace Projeto.Apresentacao.Controllers
     public class TarefaController : Controller
     {
         // GET: Tarefa
+        [NoCache]
         public ActionResult Index()
         {
             return View();
