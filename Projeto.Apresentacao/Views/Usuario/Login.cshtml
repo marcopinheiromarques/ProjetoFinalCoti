@@ -31,7 +31,7 @@
             <div class="card-header">Login</div>
             <div class="card-body">
 
-                @using (Html.BeginForm("AutenticarUsuario", "Usuario", FormMethod.Post))
+                @using (Html.BeginForm("AutenticarUsuario", "Usuario", FormMethod.Post, new { onsubmit = "ShowLoading()" }))
                 {
                     <div class="row">
                         <div class="col-md-12">
@@ -59,11 +59,12 @@
                         <div class="form-check">
                             <label class="form-check-label">
                                 @Html.CheckBoxFor(model => model.LembrarMe, new { @class = "form-check-input" }) Lembrar-me
-                                
+
                             </label>
                         </div>
                     </div>
-                    <input type="submit" value="Login" class="btn btn-primary btn-block" />
+
+                    <button type="submit" class="btn btn-primary btn-block"><i id="loading"></i> Login</button>
                     
                     <span class="text-danger">
                         @ViewBag.Mensagem
@@ -83,6 +84,27 @@
 
     <!-- Core plugin JavaScript-->
     <script src="~/Scripts/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <script src="~/Scripts/vendor/fontawesome-free/all.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            $("#loading").removeClass("fa");
+            $("#loading").removeClass("fa-spinner");
+            $("#loading").removeClass("fa-spin");
+
+        });
+
+        function ShowLoading() {
+
+            $("#loading").addClass("fa");
+            $("#loading").addClass("fa-spinner");
+            $("#loading").addClass("fa-spin");
+        }
+    </script>
+
+
 </body>
 
 </html>
