@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace Projeto.Apresentacao.Controllers
 {
+    [Authorize]
     public class ContatoController : Controller
     {
         // GET: Contato
