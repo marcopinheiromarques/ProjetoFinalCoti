@@ -1,6 +1,15 @@
-﻿function alterarRegistro(idRegistro) {
+﻿function RetornaDataFormatada(valor) {
 
-    sessionStorage.setItem('contato_funcao', 'A');
+    var retorno = valor.replace(/[^0-9 +]/g, '');
+    var data = new Date(parseInt(retorno));
+
+    return data.getDate() + "/" + (data.getMonth() + 1) + "/" + data.getFullYear();
+}
+
+
+function alterarRegistro(idRegistro) {
+
+    sessionStorage.setItem('tarefa_funcao', 'A');
 
     limparCamposCadastro();
 
@@ -8,19 +17,19 @@
 
     $.ajax({
         type: "GET",
-        url: "/Contato/BuscarContato",
+        url: "/Tarefa/BuscarTarefa",
         data: dado,
         success: function (msg) {
 
             if (msg.sucesso === true) {
 
-                $('#codigo'  ).val(msg.contato.IdContato);
-                $('#nome'    ).val(msg.contato.Nome);
-                $('#email'   ).val(msg.contato.Email);
-                $('#telefone').val(msg.contato.Telefone);
+                $('#codigo').val(msg.tarefa.IdTarefa);
+                $('#nome').val(msg.tarefa.Nome);
+                $('#data_entrega').val(RetornaDataFormatada(msg.tarefa.DataEntrega));
+                $('#descricao').val(msg.tarefa.Descricao);
 
                 $('#codigo').prop('disabled', true);
-                $('#cadastro_contato').modal('show').on('shown.bs.modal', function () {
+                $('#cadastro_tarefa').modal('show').on('shown.bs.modal', function () {
                     $('#nome').focus();
                 });
             }
@@ -62,17 +71,17 @@ function excluirRegistro(idRegistro) {
 
             $.ajax({
                 type: "POST",
-                url: "/Contato/Excluir",
+                url: "/Tarefa/Excluir",
                 data: dado,
                 success: function (msg) {
 
                     if (msg.sucesso === true) {
-                        carregaDadosContatos();
+                        carregaDadosTarefas();
 
                         swal(
-                          'Excluído!',
-                          msg.mensagem,
-                          'success'
+                            'Excluído!',
+                            msg.mensagem,
+                            'success'
                         );
                     }
                     else {
@@ -81,7 +90,7 @@ function excluirRegistro(idRegistro) {
                             title: 'Erro',
                             text: msg.mensagem
                         });
-                    }                   
+                    }
                 },
                 error: function (msg) {
 
@@ -104,42 +113,40 @@ function carregaDadosNaTabela(dados) {
     for (var i = 0; i < dados.length; i++) {
 
         linha += '<tr>' +
-                   '<td>' + dados[i].IdContato + '</td>' +
-                   '<td>' + dados[i].Nome + '</td>' +
-                   '<td>' + dados[i].Email + '</td>' +
-                   '<td>' + dados[i].Telefone + '</td>' +
-                   '<td class="text-center">' +
-                      '<button class="btn btn-info btn-sm" onclick="alterarRegistro(' + dados[i].IdContato + ')"><i class="fas fa-pencil-alt"></i> Alterar</button>' +
-                      '&nbsp;' +
-                      '<button class="btn btn-danger btn-sm" onclick="excluirRegistro(' + dados[i].IdContato + ')"><i class="fas fa-trash-alt"></i> Excluir</button>' +
-                   '</td>' +
-                 '</tr>';
+            '<td>' + dados[i].IdTarefa + '</td>' +
+            '<td>' + dados[i].Nome + '</td>' +
+            '<td>' + RetornaDataFormatada(dados[i].DataEntrega) + '</td>' +
+            '<td>' + dados[i].Descricao + '</td>' +
+            '<td class="text-center">' +
+            '<button class="btn btn-info btn-sm" onclick="alterarRegistro(' + dados[i].IdTarefa + ')"><i class="fas fa-pencil-alt"></i> Alterar</button>' +
+            '&nbsp;' +
+            '<button class="btn btn-danger btn-sm" onclick="excluirRegistro(' + dados[i].IdTarefa + ')"><i class="fas fa-trash-alt"></i> Excluir</button>' +
+            '</td>' +
+            '</tr>';
     }
 
-    $('#lista_contatos > tbody').html(linha);
+    $('#lista_tarefas > tbody').html(linha);
 
     $('#total_registros').html('<strong>Total de Registros: ' + dados.length + '</strong>');
 }
 
-
-
-function carregaDadosContatos() {    
+function carregaDadosTarefas() {
 
     var usuario_logado = $('#usuario_logado').text();
 
     $.ajax({
         type: "GET",
-        url: "/Contato/Listar",
+        url: "/Tarefa/Listar",
         data: { usuarioLogado: usuario_logado },
         success: function (dados) {
 
-            carregaDadosNaTabela(dados);
-            
+           carregaDadosNaTabela(dados);
+
         },
         error: function (msg) {
             alert(msg);
         }
-    });  
+    });
 
 }
 
@@ -147,88 +154,78 @@ function limparCamposCadastro() {
 
     $('#codigo').val('');
     $('#nome').val('');
-    $('#email').val('');
-    $('#telefone').val('');
-
-    /*
-    $(".somente_numero").bind("keyup blur focus", function (e) {
-        e.preventDefault();
-        var expre = /[^\d]/g;
-        $(this).val($(this).val().replace(expre, ''));
-    });
-    */
+    $('#data_entrega').val('');
+    $('#descricao').val('');
+    
 }
 
+$(document).ready(function () {
 
-$(document).ready(function(){
+    carregaDadosTarefas();
 
-    carregaDadosContatos();
+    $('.data').mask("00/00/0000", { placeholder: "__/__/____" });   
 
-    $('.tel').mask('(00) 0000-0000');
-    
-    $('#inserir_contato').click(function(){
+    $('#inserir_tarefa').click(function () {
 
-        sessionStorage.setItem('contato_funcao', 'I');
+        sessionStorage.setItem('tarefa_funcao', 'I');
 
         limparCamposCadastro();
 
         $('#codigo').prop('disabled', true);
-        $('#cadastro_contato').modal('show').on('shown.bs.modal', function () {
+        $('#cadastro_tarefa').modal('show').on('shown.bs.modal', function () {
             $('#nome').focus();
         });
 
     });
 
-    $('#pesquisar_contato').click(function(){
+    $('#pesquisar_tarefa').click(function () {
 
-        sessionStorage.setItem('contato_funcao', 'P');
+        sessionStorage.setItem('tarefa_funcao', 'P');
 
         limparCamposCadastro();
 
         $('#codigo').prop('disabled', false);
-        $('#cadastro_contato').modal('show').on('shown.bs.modal', function () {
+        $('#cadastro_tarefa').modal('show').on('shown.bs.modal', function () {
             $('#codigo').focus();
         });
     });
 
+    $('#todos_tarefas').click(function () {
 
-    $('#todos_contatos').click(function () {
-
-        carregaDadosContatos();        
+        carregaDadosTarefas();
 
     });
-
 
     $('#btnOK').click(function () {
 
         var dados;
-        var funcao = sessionStorage.getItem('contato_funcao');
+        var funcao = sessionStorage.getItem('tarefa_funcao');
 
         if (funcao === 'I') {
 
             dados = {
-                IdContato: 0,
+                IdTarefa: 0,
                 Nome: $('#nome').val(),
-                Email: $('#email').val(),
-                Telefone: $('#telefone').val(),
+                DataEntrega: $('#data_entrega').val(),
+                Descricao: $('#descricao').val(),
                 usuarioLogado: $('#usuario_logado').text()
             };
 
             $.ajax({
                 type: "POST",
-                url: "/Contato/Inserir",
+                url: "/Tarefa/Inserir",
                 data: dados,
-                success: function (msg) {                   
+                success: function (msg) {
 
                     if (msg.sucesso === true) {
-                        $('#cadastro_contato').modal('hide');
-                        carregaDadosContatos();
+                        $('#cadastro_tarefa').modal('hide');
+                        carregaDadosTarefas();
 
                         swal(
-                              'Inserido!',
-                              'O registro foi inserido.',
-                              'success'
-                            );
+                            'Inserido!',
+                            'O registro foi inserido.',
+                            'success'
+                        );
                     }
                     else {
 
@@ -262,28 +259,28 @@ $(document).ready(function(){
         else if (funcao === 'A') {
 
             dados = {
-                IdContato: $('#codigo').val(),
+                IdTarefa: $('#codigo').val(),
                 Nome: $('#nome').val(),
-                Email: $('#email').val(),
-                Telefone: $('#telefone').val()
+                DataEntrega: $('#data_entrega').val(),
+                Descricao: $('#descricao').val()                
             };
-            
+
             $.ajax({
                 type: "POST",
-                url: "/Contato/Alterar",
+                url: "/Tarefa/Alterar",
                 data: dados,
                 success: function (msg) {
 
                     if (msg.sucesso === true) {
 
-                        $('#cadastro_contato').modal('hide');
+                        $('#cadastro_tarefa').modal('hide');
 
-                        carregaDadosContatos();
+                        carregaDadosTarefas();
 
                         swal(
-                          'Alterado!',
-                          msg.dados,
-                          'success'
+                            'Alterado!',
+                            msg.dados,
+                            'success'
                         );
                     }
                     else {
@@ -323,20 +320,20 @@ $(document).ready(function(){
         else if (funcao === 'P') {
 
             dados = {
-                IdContato: $('#codigo').val(),
+                IdTarefa: $('#codigo').val(),
                 Nome: $('#nome').val(),
-                Email: $('#email').val(),
-                Telefone: $('#telefone').val(),
+                DataEntrega: $('#data_entrega').val(),
+                Descricao: $('#descricao').val(),
                 usuarioLogado: $('#usuario_logado').text()
             };
 
             $.ajax({
-                type: "GET",
-                url: "/Contato/Filtrar",
+                type: "POST",
+                url: "/Tarefa/Filtrar",
                 data: dados,
                 success: function (dados) {
 
-                    $('#cadastro_contato').modal('hide');
+                    $('#cadastro_tarefa').modal('hide');
 
                     carregaDadosNaTabela(dados);
 
@@ -355,4 +352,5 @@ $(document).ready(function(){
         }
 
     });
+
 });

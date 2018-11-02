@@ -10,32 +10,97 @@
 
 <div class="row">
     <div class="col-md-2">
-        <button class="btn btn-primary btn-block"><i class="fas fa-plus"></i> Inserir</button>
+        <button id="inserir_tarefa" class="btn btn-primary btn-block btn-sm"><i class="fas fa-plus"></i> Inserir</button>
     </div>
     <div class="col-md-2">
-        <button class="btn btn-default btn-block"><i class="fas fa-search"></i> Pesquisar</button>
+        <button id="pesquisar_tarefa" class="btn btn-default btn-block btn-sm"><i class="fas fa-search"></i> Pesquisar</button>
+    </div>
+    <div class="col-md-2">
+        <button id="todos_tarefas" class="btn btn-secondary btn-block btn-sm"><i class="far fa-list-alt"></i> Todos</button>
     </div>
 </div>
 <br />
 <div class="row">
     <div class="col-md-12">
-        <table class="table table-bordered table-striped">
-            <thead>
+        <table id="lista_tarefas" class="table table-bordered table-striped table-hover table-sm">
+            <thead class="thead-dark">
                 <tr>
-                    <th>Código</th>
-                    <th>Nome</th>
-                    <th>Data de Entrega</th>
-                    <th>Descrição</th>
-                    <th>Ação</th>
+                    <th style="width: 5%" class="text-center">Código</th>
+                    <th style="width: 30%" class="text-center">Nome</th>
+                    <th style="width: 15%" class="text-center">Data de Entrega</th>
+                    <th style="width: 30%" class="text-center">Descrição</th>
+                    <th style="width: 20%" class="text-center">Ação</th>
                 </tr>
             </thead>
-            <tbody>
-            </tbody>
+            <tbody></tbody>
             <tfoot>
                 <tr>
-                    <td>Total de Registros: </td>
+                    <td id="total_registros" colspan="5"></td>
                 </tr>
             </tfoot>
         </table>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="cadastro_tarefa" tabindex="-1" role="dialog" aria-labelledby="modal_cadastro_tarefa" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title text-white" id="modal_cadastro_tarefa">Tarefa</h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label>Código:</label>
+                            <input type="text" id="codigo" class="form-control form-control-sm somente_numero" disabled />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Nome:</label>
+                            <input type="text" id="nome" class="form-control form-control-sm" placeholder="Informe o nome" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label>Data de Entrega:</label>
+                            <input type="text" id="data_entrega" class="form-control form-control-sm data" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Descrição:</label>
+                            <textarea style="resize: none" id="descricao" class="form-control form-control-sm" rows="5" cols="40" maxlength="500" placeholder="Informe a Descrição"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal"><i class="fas fa-times"></i> Cancelar</button>
+                <button type="button" id="btnOK" class="btn btn-primary btn-sm"><i class="fas fa-check"></i> OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script src="~/Scripts/tarefa.js"></script>
+    <script src="~/Scripts/jquery.mask.min.js"></script>
+}

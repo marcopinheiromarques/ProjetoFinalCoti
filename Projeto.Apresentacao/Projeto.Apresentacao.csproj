@@ -154,6 +154,10 @@
     <Compile Include="Models\ContatoInclusaoViewModel.cs" />
     <Compile Include="Models\ContatoViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
+    <Compile Include="Models\TarefaEdicaoViewModel.cs" />
+    <Compile Include="Models\TarefaFiltroViewModel.cs" />
+    <Compile Include="Models\TarefaInclusaoViewModel.cs" />
+    <Compile Include="Models\TarefaViewModel.cs" />
     <Compile Include="Models\UsuarioRegistroViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -1562,6 +1566,8 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.mask.js" />
+    <Content Include="Scripts\jquery.mask.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -1572,6 +1578,7 @@
     <Content Include="Scripts\sb-admin.js" />
     <Content Include="Scripts\sb-admin.min.js" />
     <Content Include="Scripts\sweetalert2.min.js" />
+    <Content Include="Scripts\tarefa.js" />
     <Content Include="Scripts\vendor\bootstrap\bootstrap.bundle.js" />
     <Content Include="Scripts\vendor\bootstrap\bootstrap.bundle.min.js" />
     <Content Include="Scripts\vendor\bootstrap\bootstrap.js" />
