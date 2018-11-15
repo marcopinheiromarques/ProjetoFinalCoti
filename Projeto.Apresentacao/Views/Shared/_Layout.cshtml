@@ -21,7 +21,7 @@
 
     <link href="~/Content/Site.css" rel="stylesheet" />
 
-    <link href="~/Content/sweetalert2.min.css" rel="stylesheet" />
+    <link href="~/Content/sweetalert2.min.css" rel="stylesheet" />   
 
 </head>
 <body id="page-top">
@@ -71,8 +71,8 @@
                     <span>Relatórios</span>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-                    @Html.ActionLink("Contatos", "Relatorio", "Contato", null, new { @class = "dropdown-item" })
-                    @Html.ActionLink("Tarefas", "Relatorio", "Tarefa", null, new { @class = "dropdown-item" })
+                    @Html.ActionLink("Contatos", "Relatorio", "Contato", new { usuarioLogado = @User.Identity.Name }, new { @class = "dropdown-item" })
+                    @Html.ActionLink("Tarefas", "Relatorio", "Tarefa", new { usuarioLogado = @User.Identity.Name }, new { @class = "dropdown-item" })
                 </div>
             </li>
         </ul>

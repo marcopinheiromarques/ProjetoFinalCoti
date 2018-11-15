@@ -1,10 +1,12 @@
 ﻿using Projeto.Apresentacao.Filters;
 using Projeto.Apresentacao.Models;
+using Projeto.Apresentacao.Relatorio;
 using Projeto.Negocio;
 using Projeto.Repositorio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -19,7 +21,6 @@ namespace Projeto.Apresentacao.Controllers
         {
             return View();
         }
-
         
         [HttpGet]
         public JsonResult Listar(string usuarioLogado)
@@ -231,6 +232,56 @@ namespace Projeto.Apresentacao.Controllers
             {
                 throw e;
             }
+        }
+
+
+        public void Relatorio(string usuarioLogado)
+        {
+            StringBuilder conteudo = new StringBuilder();
+
+            conteudo.Append("<h1>Relatório de Contatos</h1>");
+            conteudo.Append($"<p>Relatório gerado em: {DateTime.Now} </p>");
+            conteudo.Append("<br/>");
+
+            conteudo.Append("<table>");
+            conteudo.Append("<tr>");
+              conteudo.Append("<th>Código</th>");
+              conteudo.Append("<th>Nome</th>");
+              conteudo.Append("<th>E-mail</th>");
+              conteudo.Append("<th>Telefone</th>");
+            conteudo.Append("</tr>");
+
+            ContatoRepositorio rep  = new ContatoRepositorio();
+            UsuarioRepositorio urep = new UsuarioRepositorio();
+            Usuario usuario         = urep.EncontrarPorLogin(usuarioLogado);
+            List<Contato> listaRep  = rep.ListarTodos(usuario.IdUsuario);
+
+            foreach (var contato in listaRep)
+            {
+                conteudo.Append("<tr>");
+                  conteudo.Append($"<td>{contato.IdContato}</td>");
+                  conteudo.Append($"<td>{contato.Nome}</td>");
+                  conteudo.Append($"<td>{contato.Email}</td>");
+                  conteudo.Append($"<td>{contato.Telefone}</td>");
+                conteudo.Append("</tr>");
+            }
+
+            conteudo.Append("</table>");
+
+            var css = Server.MapPath("/Content/relatorio.css");
+
+            RelatorioUtil util = new RelatorioUtil();
+            byte[]        pdf  = util.GetPDF(conteudo.ToString(), css);
+
+            Response.Clear();
+            Response.ContentType = "application/pdf";
+            Response.AddHeader("content-disposition",
+            "attachment; filename=contatos.pdf");
+
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+
+            Response.BinaryWrite(pdf);
+            Response.End();
         }
     }
 }

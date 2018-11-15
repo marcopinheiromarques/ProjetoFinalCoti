@@ -1,10 +1,12 @@
 ﻿using Projeto.Apresentacao.Filters;
 using Projeto.Apresentacao.Models;
+using Projeto.Apresentacao.Relatorio;
 using Projeto.Negocio;
 using Projeto.Repositorio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -247,6 +249,55 @@ namespace Projeto.Apresentacao.Controllers
             {
                 throw e;
             }
+        }
+
+        public void Relatorio(string usuarioLogado)
+        {
+            StringBuilder conteudo = new StringBuilder();
+
+            conteudo.Append("<h1>Relatório de Tarefas</h1>");
+            conteudo.Append($"<p>Relatório gerado em: {DateTime.Now} </p>");
+            conteudo.Append("<br/>");
+
+            conteudo.Append("<table>");
+            conteudo.Append("<tr>");
+            conteudo.Append("<th>Código</th>");
+            conteudo.Append("<th>Nome</th>");
+            conteudo.Append("<th>Data Entrega</th>");
+            conteudo.Append("<th>Descrição</th>");
+            conteudo.Append("</tr>");
+
+            TarefaRepositorio  rep      = new TarefaRepositorio();
+            UsuarioRepositorio urep     = new UsuarioRepositorio();
+            Usuario            usuario  = urep.EncontrarPorLogin(usuarioLogado);
+            List<Tarefa>       listaRep = rep.ListarTodos(usuario.IdUsuario);
+
+            foreach (var tarefa in listaRep)
+            {
+                conteudo.Append("<tr>");
+                conteudo.Append($"<td>{tarefa.IdTarefa}</td>");
+                conteudo.Append($"<td>{tarefa.Nome}</td>");
+                conteudo.Append($"<td>{tarefa.DataEntrega.ToString("dd/MM/yyyy")}</td>");
+                conteudo.Append($"<td class='memo'>{tarefa.Descricao}</td>");
+                conteudo.Append("</tr>");
+            }
+
+            conteudo.Append("</table>");
+
+            var css = Server.MapPath("/Content/relatorio.css");
+
+            RelatorioUtil util = new RelatorioUtil();
+            byte[] pdf = util.GetPDF(conteudo.ToString(), css);
+
+            Response.Clear();
+            Response.ContentType = "application/pdf";
+            Response.AddHeader("content-disposition",
+            "attachment; filename=tarefas.pdf");
+
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+
+            Response.BinaryWrite(pdf);
+            Response.End();
         }
     }
 }
