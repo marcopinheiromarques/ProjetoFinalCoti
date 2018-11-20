@@ -30,16 +30,18 @@
             <div class="card-body">
                 <div class="text-center mb-4">
                     <h4>Esqueceu sua Senha?</h4>
-                    <p>Informe seu endereço de e-mail para que possamos enviar as instruções de alteração de senha.</p>                    
+                    <p>Informe seu endereço de e-mail para que possamos enviar uma senha temporária.</p>
                 </div>
                 <form>
                     <div class="form-group">
+                        <div id="mensagem_confirmacao" class="text-info"></div>
+                        <div id="mensagem_validacao" class="text-danger"></div>
                         <div class="form-label-group">
                             <input type="email" id="inputEmail" class="form-control" placeholder="E-mail" required="required" autofocus="autofocus">
                             <label for="inputEmail">Endereço de E-mail</label>
                         </div>
                     </div>
-                    <a class="btn btn-primary btn-block" href="login.html">Alterar Senha</a>
+                    <a class="btn btn-primary btn-block" href="#" onclick="alterarSenha()"><i id="loading"></i> Alterar Senha</a>
                 </form>
                 <div class="text-center">
                     <a class="d-block small mt-3" href='@Url.Content("~/Usuario/Registro")'>Registrar Nova Conta</a>
@@ -52,7 +54,9 @@
     <script src="~/Scripts/vendor/jquery/jquery.min.js"></script>
     <script src="~/Scripts/vendor/bootstrap/bootstrap.bundle.min.js"></script>
     <!-- Core plugin JavaScript-->
-    <script src="~/Scripts/vendor/jquery-easing/jquery.easing.min.js"></script>    
+    <script src="~/Scripts/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <script src="~/Scripts/esqueceu.senha.js"></script>
 </body>
 
 </html>

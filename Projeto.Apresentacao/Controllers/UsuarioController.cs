@@ -1,6 +1,7 @@
 ﻿using Projeto.Apresentacao.Models;
 using Projeto.Negocio;
 using Projeto.Repositorio;
+using Projeto.Utilitario;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -88,7 +89,22 @@ namespace Projeto.Apresentacao.Controllers
 
                         FormsAuthentication.SetAuthCookie(loginInserido.Login, loginInserido.LembrarMe);
 
-                        return RedirectToAction("Index", "Home");
+                        Usuario u = repositorio.EncontrarPorLogin(usuario.Login);
+
+                        if (u.AlterouSenha == 1)
+                        {
+                            return View("AlterarSenhaManualmente",
+                                        new UsuarioAlterarSenhaViewModel()
+                                        {
+                                            Login          = u.Login,
+                                            Senha          = "",
+                                            ConfirmarSenha = ""
+                                        });
+                        }
+                        else
+                        {
+                            return RedirectToAction("Index", "Home");
+                        }
                     }
                     else
                     {
@@ -112,5 +128,92 @@ namespace Projeto.Apresentacao.Controllers
 
             return View("Login");
         }
+
+        public JsonResult AlterarSenhaAutomaticamente(string email)
+        {
+            try
+            {
+                UsuarioRepositorio rep = new UsuarioRepositorio();
+                Usuario            u   = rep.EncontrarPorEmail(email);  
+                
+                if (u != null)
+                {
+                    //gera nova senha aleatória
+                    string novaSenha = Randomico.alfanumericoAleatorio(6);
+
+                    //altera a senha do usuário
+                    bool alterou = rep.AlterarSenha(u, novaSenha, 1);
+                    
+                    if (alterou)
+                    {
+                        //envia a nova senha por email
+                        try
+                        {
+                            string corpo = $"Olá {u.Login},\n\n conforme solicitado, segue sua nova senha na agenda virtual: " + novaSenha;
+
+                            Email e = new Email();
+                            e.EnviarEmail(email,
+                                          "Agenda Virtual - Alteração de Senha",
+                                          corpo,
+                                          null);
+
+                            return Json(new { sucesso = true, mensagem = "Email com a senha enviado com sucesso!" });
+                        }
+                        catch (Exception e)
+                        {
+                            return Json(new { sucesso = false, mensagem = "Não foi possível enviar a senha por email: " + e.Message +
+                                " A nova senha é: " + novaSenha });
+                        }
+                    }
+                    else
+                    {
+                        return Json(new { sucesso = false, mensagem = "Não foi possível alterar a senha." });
+                    }                   
+                }
+                else
+                {
+                    return Json(new { sucesso = false, mensagem = "Email não cadastrado na base de dados." });
+                }
+            }
+            catch (Exception e)
+            {
+                return Json(new { sucesso = false, mensagem = e.Message });                
+            }
+        }
+
+        public ActionResult AlterarSenhaManualmente(string login)
+        {
+            return View("AlterarSenhaManualmente", 
+                new UsuarioAlterarSenhaViewModel()
+                {
+                    Login          = login,
+                    Senha          = "",
+                    ConfirmarSenha = ""
+                });
+        }
+
+        public ActionResult AlterarSenha(UsuarioAlterarSenhaViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    UsuarioRepositorio rep = new UsuarioRepositorio();
+                    Usuario            u   = rep.EncontrarPorLogin(model.Login);
+                    rep.AlterarSenha(u, model.Senha, 0);
+
+                    return RedirectToAction("Index", "Home");
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }                 
+            }
+            else
+            {
+                return View("AlterarSenhaManualmente");
+            }
+        }
+
     }
 }

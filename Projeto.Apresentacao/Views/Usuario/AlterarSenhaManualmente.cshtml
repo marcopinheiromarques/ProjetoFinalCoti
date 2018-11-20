@@ -1,0 +1,78 @@
+﻿@model Projeto.Apresentacao.Models.UsuarioAlterarSenhaViewModel
+
+
+@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Agenda Virtual - Alterar Senha Usuário</title>
+    <!-- Bootstrap core CSS-->
+    <link href="~/Content/vendor/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <!-- Custom fonts for this template-->
+    <link href="~/Content/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" />
+    <!-- Custom styles for this template-->
+    <link href="~/Content/sb-admin.css" rel="stylesheet" />
+
+</head>
+
+<body class="bg-dark">
+
+    <div class="container">
+        <div class="card card-login mx-auto mt-5">
+            <div class="card-header">Alterar Senha</div>
+            <div class="card-body">
+
+                @using (Html.BeginForm("AlterarSenha", "Usuario", FormMethod.Post))
+                {
+                    @Html.HiddenFor(model => model.Login);
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Senha)
+                                @Html.PasswordFor(model => model.Senha, new { @placeholder = "Senha", @class = "form-control", autofocus = true })
+                                <span class="text-danger">
+                                    @Html.ValidationMessageFor(model => model.Senha)
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ConfirmarSenha)
+                                @Html.PasswordFor(model => model.ConfirmarSenha, new { @placeholder = "Confirmar Senha", @class = "form-control" })
+                                <span class="text-danger">
+                                    @Html.ValidationMessageFor(model => model.ConfirmarSenha)
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <input type="submit" value="Alterar" class="btn btn-primary btn-block" />
+                }                
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="~/Scripts/vendor/jquery/jquery.min.js"></script>
+    <script src="~/Scripts/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="~/Scripts/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
+

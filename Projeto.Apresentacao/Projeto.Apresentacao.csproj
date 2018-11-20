@@ -168,6 +168,7 @@
     <Compile Include="Models\TarefaFiltroViewModel.cs" />
     <Compile Include="Models\TarefaInclusaoViewModel.cs" />
     <Compile Include="Models\TarefaViewModel.cs" />
+    <Compile Include="Models\UsuarioAlterarSenhaViewModel.cs" />
     <Compile Include="Models\UsuarioRegistroViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Relatorio\RelatorioUtil.cs" />
@@ -1578,6 +1579,7 @@
     <Content Include="Scripts\demo\chart-bar-demo.js" />
     <Content Include="Scripts\demo\chart-pie-demo.js" />
     <Content Include="Scripts\demo\datatables-demo.js" />
+    <Content Include="Scripts\esqueceu.senha.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -1654,6 +1656,7 @@
     <Content Include="Views\Usuario\Registro.cshtml" />
     <Content Include="Views\Usuario\EsqueceuSenha.cshtml" />
     <Content Include="Views\Tarefa\Index.cshtml" />
+    <Content Include="Views\Usuario\AlterarSenhaManualmente.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Projeto.Negocio\Projeto.Negocio.csproj">
@@ -1663,6 +1666,10 @@
     <ProjectReference Include="..\Projeto.Repositorio\Projeto.Repositorio.csproj">
       <Project>{91c04d69-38da-4685-b3b1-f894232ae49e}</Project>
       <Name>Projeto.Repositorio</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Projeto.Utilitario\Projeto.Utilitario.csproj">
+      <Project>{2CA0AA6A-E6A0-4909-B188-EFD7850CA267}</Project>
+      <Name>Projeto.Utilitario</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

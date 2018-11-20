@@ -52,7 +52,7 @@ namespace Projeto.Repositorio
             {
                 using (SqlConnection con = new SqlConnection(stringConexao))
                 {
-                    string query = "UPDATE Usuarios Login = @Login, Email = @Email WHERE IdUsuario = @IdUsuario";                                   
+                    string query = "UPDATE Usuarios SET Login = @Login, Email = @Email WHERE IdUsuario = @IdUsuario";                                   
 
                     con.Execute(query, new {
                                              Login     = usuario.Login,
@@ -127,6 +127,19 @@ namespace Projeto.Repositorio
             return usuario;
         }
 
+        public Usuario EncontrarPorEmail(string email)
+        {
+            string query = "SELECT * FROM Usuarios WHERE Email = @Email";
+            Usuario usuario = null;
+
+            using (SqlConnection con = new SqlConnection(stringConexao))
+            {
+                usuario = con.Query<Usuario>(query, new { Email = email }).FirstOrDefault();
+            }
+
+            return usuario;
+        }
+
         public bool ExisteLoginOuEmailJaCadastrados(Usuario usuario)
         {
             Usuario usuarioCadastrado = null;
@@ -151,5 +164,30 @@ namespace Projeto.Repositorio
                 return con.Query<Usuario>(query, new { Login = usuario.Login, Senha = Criptografia.Encriptar(usuario.Senha) }).FirstOrDefault() != null;
             }
         }
+
+        public bool AlterarSenha(Usuario usuario, string novaSenha, int AlterouSenha)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(stringConexao))
+                {
+                    string query = "UPDATE Usuarios SET Senha = @Senha, AlterouSenha = @AlterouSenha WHERE IdUsuario = @IdUsuario";
+
+                    con.Execute(query, new
+                    {
+                        Senha        = Criptografia.Encriptar(novaSenha),
+                        AlterouSenha = AlterouSenha,
+                        IdUsuario    = usuario.IdUsuario
+                    });
+                }
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
     }
 }

@@ -13,7 +13,7 @@ namespace Projeto.Negocio
         public string   Email                { get; set; }
         public string   Senha                { get; set; }
         public DateTime DataCriacao          { get; set; }
-        public string   CodigoAlteracaoLogin { get; set; }
+        public int      AlterouSenha         { get; set; }
 
         public override string ToString()
         {
